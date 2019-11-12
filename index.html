@@ -95,6 +95,11 @@
             <a href="#">NEW RELEASES</a>
             <a href="#">DISCOVER</a>
           </div>
+          <input type="text" class="form-control mt-3" placeholder="Start typing to get the music you love..." id="searchField" onkeyup="search()">
+          <div id="search">
+            <h2>Search Box</h2>
+            <div class="row imgLinks py-3" id="searchSection"></div>
+          </div>
           <div id="rock">
             <h2>Rock Classics</h2>
             <div class="row imgLinks py-3" id="rockSection"></div>
@@ -193,6 +198,51 @@
         "drake",
         "kanyewest"
       ];
+
+      search = async () => {
+        let searchQuery = document.querySelector("#searchField").value //get the value from our search box
+
+        if (searchQuery.length > 2 )  { //if i have a value in the search field => fetch the information from rapidapi & display the result
+          document.querySelector("#search").style.display = "block"
+          var headers = new Headers({
+            "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
+            "X-RapidAPI-Key": "9d408f0366mshab3b0fd8e5ecdf7p1b09f2jsne682a1797fa0"
+          });
+
+          try{
+              let response = await fetch("https://deezerdevs-deezer.p.rapidapi.com/search?q=" + searchQuery, 
+                {
+                  method: "GET",
+                  headers
+                } 
+              ) //get the information 
+
+              let artists = await response.json() //transform to json
+              let songInfo = artists.data;
+              let div = document.querySelector("#searchSection");
+              var mappedStuff = songInfo.map(song => albumCard(song)); //transforms the array to a new array of "albumCards"
+              var joinedVersion = mappedStuff.join() //this will join the array in a single string
+              div.innerHTML = songInfo.map(song => albumCard(song)).join(""); //new approach, oneline to do the conversion and the assignment
+
+              // map translated --->
+              // var result = []
+              // songInfo.forEach(song => {
+              //     var album = albumCard(song)
+              //     result.push(album)
+              // })
+              // div.innerHTML = result.join("")
+
+              // div.innerHTML = "";
+              // for (let i = 0; i < songInfo.length; i ++){
+              //   div.innerHTML += albumCard(songInfo[i]);   //create a new album tyle
+              // }
+            }
+            catch(err) { console.log(err) }
+          }
+        else{ //else just hide the section!
+          document.querySelector("#search").style.display = "none"
+        }
+      }
 
       function albumCard(songInfo) {
         //songInfo represents the info for the current song

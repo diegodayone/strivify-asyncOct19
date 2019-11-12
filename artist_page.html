@@ -216,71 +216,53 @@
           </div>`;
       }
 
-      window.onload = function() {
-        var artistId = new URLSearchParams(document.location.search).get("id");
+      window.onload = async () => {
+        var artistId = new URLSearchParams(document.location.search).get("id"); //getting the ID from the URL 
 
-        var headers = new Headers({
+        var headers = new Headers({ //creating the headers with the credentials in it
           "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
           "X-RapidAPI-Key": "222902beabmshb95a65b737cead6p1f3ac9jsn23ced94c0d20"
         });
 
-        fetch("https://deezerdevs-deezer.p.rapidapi.com/artist/" + artistId, {
+        let response = await fetch("https://deezerdevs-deezer.p.rapidapi.com/artist/" + artistId, {
           method: "GET",
           headers
         })
-          .then(function(response) {
-            if (response.ok) {
-              return response.json();
+
+        if (response.ok) {
+          let artist = await response.json();
+          console.log("ARTIST", artist);
+
+          //displaying the playButton
+          var playButton = document.querySelector("#playButton");
+          playButton.classList.remove("d-none");
+          playButton.classList.add("d-inline");
+
+          //displaying the followButton
+          var followButton = document.querySelector("#followButton");
+          followButton.classList.remove("d-none");
+          followButton.classList.add("d-inline");
+
+          //setting the artist name
+          var titleMain = document.querySelector(".titleMain");
+          titleMain.innerHTML = artist.name;
+
+          //setting the followers section
+          var followers = document.querySelector("#followers");
+          followers.innerText = artist.nb_fan + " followers";
+
+          let tracksResponse = await fetch( //await the fetch of the artist songs
+            "https://deezerdevs-deezer.p.rapidapi.com/search?q=" + artist.name, { 
+              method: "GET",
+              headers
             }
-          })
-          .then(function(artist) {
-            console.log("ARTIST", artist);
-
-            //displaying the playButton
-            var playButton = document.querySelector("#playButton");
-            playButton.classList.remove("d-none");
-            playButton.classList.add("d-inline");
-
-            //displaying the followButton
-            var followButton = document.querySelector("#followButton");
-            followButton.classList.remove("d-none");
-            followButton.classList.add("d-inline");
-
-            //setting the artist name
-            var titleMain = document.querySelector(".titleMain");
-            titleMain.innerHTML = artist.name;
-
-            //setting the followers section
-            var followers = document.querySelector("#followers");
-            followers.innerText = artist.nb_fan + " followers";
-
-            var tracks = fetch(
-              "https://deezerdevs-deezer.p.rapidapi.com/search?q=" +
-                artist.name,
-              {
-                method: "GET",
-                headers
-              }
-            )
-              .then(function(response) {
-                if (response.ok) {
-                  return response.json();
-                }
-              })
-              .then(function(tracklist) {
-                console.log("TRACKLIST", tracklist);
-                for (var i = 0; i < tracklist.data.length; i++) {
-                  var apiLoaded = document.querySelector("#apiLoaded");
-                  apiLoaded.innerHTML += albumCard(tracklist.data[i]);
-                }
-              })
-              .catch(function(error) {
-                console.log(error);
-              });
-          })
-          .catch(function(error) {
-            console.log(error);
-          });
+          )
+          let tracklist = await tracksResponse.json() //we transorm the response in json
+          for (var i = 0; i < tracklist.data.length; i++) { //foreach song
+            var apiLoaded = document.querySelector("#apiLoaded"); 
+            apiLoaded.innerHTML += albumCard(tracklist.data[i]); //we create a new "albumCard"
+          }
+        }
       };
     </script>
   </body>

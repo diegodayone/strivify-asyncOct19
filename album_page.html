@@ -203,35 +203,38 @@
             </div>`;
       }
 
-      window.onload = function() {
-        var albumId = new URLSearchParams(document.location.search).get("id");
+      window.onload = async function() {
+        var albumId = new URLSearchParams(document.location.search).get("id"); //get id from query string
 
-        var headers = new Headers({
+        var headers = new Headers({ //create headers with credentials
           "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
           "X-RapidAPI-Key": "c74a0a086emshf55ffb8dbdcb59ap17a486jsnb83bb4d3e387"
         });
 
-        fetch("https://deezerdevs-deezer.p.rapidapi.com/album/" + albumId, {
-          method: "GET",
-          headers
-        })
-          .then(function(response) {
-            if (response.ok) {
-              return response.json();
-            }
+        try{
+          let response = await fetch("https://deezerdevs-deezer.p.rapidapi.com/album/" + albumId, { //fetch info from rapid api
+            method: "GET",
+            headers
           })
-          .then(function(album) {
-            console.log("ALBUM", album);
-            console.log("tracks", album.tracks);
-            var imgContainer = document.querySelector("#img-container");
-            imgContainer.innerHTML = albumArt(album);
-            var trackList = document.querySelector("#trackList");
-            for (var i = 0; i < album.tracks.data.length; i++) {
-              var div = document.createElement("div");
-              div.innerHTML += song(album.tracks.data[i]);
-              trackList.appendChild(div);
+
+          if (response.ok){  //if no error
+            let album = await response.json(); //transform the response in JSON
+            var imgContainer = document.querySelector("#img-container"); //get a reference to the image container
+            imgContainer.innerHTML = albumArt(album); //create the albumArt for the img-container
+            var trackList = document.querySelector("#trackList"); //get a reference to the tracklist div
+            for (var i = 0; i < album.tracks.data.length; i++) { //foreach track
+              var div = document.createElement("div"); //create a div
+              div.innerHTML += song(album.tracks.data[i]); //use "song" method to create the item
+              trackList.appendChild(div); //add the item to the tracklist
             }
-          });
+          }
+          else{ //something wrong with my request --> headers missing, wrong HTTP Method
+             document.querySelector("#img-container").innerHTML = "NOT OK" + await response.text()
+          }
+        }
+        catch(exception) { //ex.: Url is not correct, Internal Server Error
+          document.querySelector("#img-container").innerHTML = exception
+        }
       };
     </script>
   </body>

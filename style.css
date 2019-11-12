@@ -187,7 +187,8 @@ ul {
 #rock,
 #pop,
 #hiphop,
-#artist-tracks {
+#artist-tracks,
+#search {
   padding-left: 4.5rem;
   color: white;
   font-weight: 700;
@@ -275,4 +276,8 @@ ul {
 
 .artist-name {
   color: white;
+}
+
+#search {
+  display: none;
 }
