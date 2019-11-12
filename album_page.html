@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <script src="https://kit.fontawesome.com/1205482781.js"></script>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>Album</title>
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <!--SIDEBAR VERTICAL-->
+        <div class="col-2">
+          <nav
+            class="navbar navbar-expand-lg navbar-expand-md navbar-white bg-navbar fixed-left justify-content-between"
+          >
+            <div class="nav-container">
+              <a class="navbar-brand" href="index.html">
+                <img
+                  src="logo/Spotify_Logo.png"
+                  alt="Spotify_Logo"
+                  width="131"
+                  height="40"
+                />
+              </a>
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                  <ul>
+                    <li>
+                      <a class="nav-item nav-link" href="index.html"
+                        ><i class="fas fa-home fa-lg"></i>&nbsp; Home
+                      </a>
+                    </li>
+                    <li>
+                      <a class="nav-item nav-link" href="#"
+                        ><i class="fas fa-search fa-lg"></i>&nbsp; Search</a
+                      >
+                    </li>
+                    <li>
+                      <a class="nav-item nav-link" href="#"
+                        ><i class="fas fa-book-open fa-lg"></i>&nbsp; Your
+                        Library</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class=" nav-btn">
+              <button class="btn signup-btn" type="button">Sign Up</button>
+              <button class="btn login-btn" type="button">Login</button>
+              <a href="#">Cookie Policy</a> |
+              <a href="#"> Privacy</a>
+            </div>
+          </nav>
+        </div>
+        <!--END SIDEBAR VERTICAL-->
+
+        <!--MAIN-->
+        <div class="col-10 mainPage">
+          <div class="mainLinks">
+            <a href="#">TRENDING</a>
+            <a href="#">PODCAST</a>
+            <a href="#">MOODS AND GENRES</a>
+            <a href="#">NEW RELEASES</a>
+            <a href="#">DISCOVER</a>
+          </div>
+          <div class="row centering">
+            <div class="container mb-3">
+              <div class="row no-gutters">
+                <div class="col-md-4 p-5 text-center" id="img-container"></div>
+                <div class="col-md-8 p-5">
+                  <div class="row">
+                    <div class="col-md-10 mb-5" id="trackList"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--END MAIN-->
+
+    <!--NAVBAR FLEX-BOTTOM-->
+    <div class="container-fluid fixed-bottom bg-container">
+      <div class="row">
+        <div class="col-12 playerControls text-center">
+          <a href="#">
+            <img src="playerbuttons/Shuffle.png" alt="shuffle" />
+          </a>
+          <a href="#">
+            <img src="playerbuttons/Previous.png" alt="shuffle" />
+          </a>
+          <a href="#">
+            <img src="playerbuttons/Play.png" alt="shuffle" />
+          </a>
+          <a href="#">
+            <img src="playerbuttons/Next.png" alt="shuffle" />
+          </a>
+          <a href="#">
+            <img src="playerbuttons/Repeat.png" alt="shuffle" />
+          </a>
+        </div>
+      </div>
+      <div class="row justify-content-center playBar py-3">
+        <div class="progress">
+          <div
+            class="progress-bar"
+            role="progressbar"
+            aria-valuenow="0"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          ></div>
+        </div>
+      </div>
+    </div>
+    <!--END NAVBAR BOTTOM-->
+
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      function albumArt(album) {
+        //175: creating the image tag
+        //177: creating the paragraph with the album title
+        //180: creating the paragraph with the artist name
+        //183: creating the fake play button
+        return `
+            <img src="${album.cover}" class="card-img img-fluid" alt="Album" />
+            <div class="mt-4 text-center">
+                <p class="album-title">${album.title}</p>
+            </div>
+            <div class="text-center">
+                <p class="artist-name">${album.artist.name}</p>
+            </div>
+            <div class="mt-4 text-center">
+                <button id="btnPlay" class="btn btn-success" type="button">Play</button>
+            </div>`;
+      }
+
+      function song(track) {
+        //193: creating the track title anchor
+        //196: setting the duration minutes
+        //199-201: checking che duration seconds, if they are less than 10 a 0 is prefixed
+        return `
+            <div class="py-3 trackHover">
+                <a href="#" class="card-title trackHover px-3" style="color:white" >${
+                  track.title
+                }</a>
+                <small class="durationClass" style="color:white">${Math.floor(
+                  parseInt(track.duration) / 60
+                )}:${
+          parseInt(track.duration) % 60 < 10
+            ? "0" + (parseInt(track.duration) % 60)
+            : parseInt(track.duration) % 60
+        }</small>
+            </div>`;
+      }
+
+      window.onload = function() {
+        var albumId = new URLSearchParams(document.location.search).get("id");
+
+        var headers = new Headers({
+          "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
+          "X-RapidAPI-Key": "c74a0a086emshf55ffb8dbdcb59ap17a486jsnb83bb4d3e387"
+        });
+
+        fetch("https://deezerdevs-deezer.p.rapidapi.com/album/" + albumId, {
+          method: "GET",
+          headers
+        })
+          .then(function(response) {
+            if (response.ok) {
+              return response.json();
+            }
+          })
+          .then(function(album) {
+            console.log("ALBUM", album);
+            console.log("tracks", album.tracks);
+            var imgContainer = document.querySelector("#img-container");
+            imgContainer.innerHTML = albumArt(album);
+            var trackList = document.querySelector("#trackList");
+            for (var i = 0; i < album.tracks.data.length; i++) {
+              var div = document.createElement("div");
+              div.innerHTML += song(album.tracks.data[i]);
+              trackList.appendChild(div);
+            }
+          });
+      };
+    </script>
+  </body>
+</html>
